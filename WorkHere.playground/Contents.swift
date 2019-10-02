@@ -13,12 +13,11 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 // decode those 50 words into an array of strings
 // print the array of words, but with each word reversed
 // print the average number of characters per word
+//struct words: Codable {
+  //  var w : String
+//}
 struct ar: Codable {
-    var wordbot : [words]
-}
-
-struct words: Codable {
-    var w : String
+    var words : [String]
 }
 let urlString = "https://api.noopschallenge.com/wordbot?count=50"
 
@@ -28,15 +27,12 @@ if let url = URL(string: urlString){
     let session = URLSession(configuration: .ephemeral)
     let task = session.dataTask(with: request) { (data, response, error) in
         print(String(data:data!, encoding: .utf8))
-        let List = try! JSONDecoder().decode(words.self, from: data!)
+        let List = try! JSONDecoder().decode(ar.self, from: data!)
         print(List)
-        var reversed = ""
-        for b in List.w{
-            String(b.reverse())
-            print(b)
+        for b in List.words{
+            print(String(b.reversed()))
+            print(b.count)
         }
-        print(reversed)
-        print(List.words.count)
     }
     task.resume()
 }
